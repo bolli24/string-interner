@@ -101,7 +101,7 @@ macro_rules! impl_serde_for_symbol {
             fn deserialize<D: ::serde::Deserializer<'de>>(
                 deserializer: D,
             ) -> ::core::result::Result<Self, D::Error> {
-                let index = <$ty as ::serde::Deserialize<'de>>::deserialize(deserializer)?;
+                let index = <$ty as ::serde::Deserialize<'de>>::deserialize(deserializer)?.wrapping_sub(1);
                 let ::core::option::Option::Some(symbol) = Self::new(index) else {
                     return ::core::result::Result::Err(<D::Error as ::serde::de::Error>::custom(
                         ::core::concat!(
